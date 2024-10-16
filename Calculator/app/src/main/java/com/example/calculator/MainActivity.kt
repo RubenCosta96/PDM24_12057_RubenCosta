@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,8 +15,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -56,7 +60,9 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun createButton(text: String, onClick: () -> Unit, color: Color){
     Button(onClick = onClick,
-        modifier = Modifier.height(60.dp).width(80.dp),
+        modifier = Modifier
+            .height(60.dp)
+            .width(80.dp),
         shape = RoundedCornerShape(20.dp),
         colors = ButtonDefaults.buttonColors(containerColor = color)) {
         Text(text = text)
@@ -73,6 +79,7 @@ fun calculatorScreen(){
         )
     }
 }
+
 
 @Composable
 fun calculatorKeyboard() {
@@ -117,6 +124,7 @@ fun calculatorKeyboard() {
 fun GreetingPreview() {
     CalculatorTheme {
         Column {
+            
             calculatorScreen()
             calculatorKeyboard()
         }
