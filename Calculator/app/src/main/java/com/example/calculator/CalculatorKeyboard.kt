@@ -1,31 +1,52 @@
 package com.example.calculator
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
+//@Composable
+//fun CreateButton(text: String, onClick: () -> Unit, color: Color) {
+//    Button(
+//        onClick = onClick,
+//        modifier = Modifier
+//            .height(55.dp)
+//            .width(70.dp),
+//        shape = RoundedCornerShape(20.dp),
+//        colors = ButtonDefaults.buttonColors(containerColor = color)
+//    ) {
+//        Text(text = text)
+//    }
+//}
+
 @Composable
 fun CreateButton(text: String, onClick: () -> Unit, color: Color) {
-    Button(
-        onClick = onClick,
-        modifier = Modifier
-            .height(55.dp)
-            .width(70.dp),
-        shape = RoundedCornerShape(20.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = color)
-    ) {
-        Text(text = text)
+    Box(modifier = Modifier.padding(4.dp)) {
+        FloatingActionButton(
+            onClick = onClick,
+            modifier = Modifier.size(90.dp),
+            shape = CircleShape,
+            containerColor = color,
+            contentColor = Color.White
+        ) {
+            Text(text = text)
+        }
     }
 }
 
@@ -36,6 +57,8 @@ fun CalculatorKeyboard(
     onOperatorClick: (String) -> Unit,
     onEqualClick: () -> Unit
 ) {
+    LazyVerticalGrid(columns = GridCells.Fixed(4)) { }
+
     Row {
         Column(
             modifier = Modifier.padding(2.dp),

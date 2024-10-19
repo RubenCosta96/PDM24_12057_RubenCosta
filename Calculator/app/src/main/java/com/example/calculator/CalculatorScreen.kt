@@ -41,14 +41,6 @@ fun CalculatorScreen() {
         operator = null
     }
 
-    val onOperatorClick = { selectedOperator: String ->
-        if (currentNumber.isNotEmpty()) {
-            previousNumber = currentNumber
-            currentNumber = ""
-            operator = selectedOperator
-        }
-    }
-
     val onEqualClick = {
         if (operator != null && previousNumber.isNotEmpty() && currentNumber.isNotEmpty()) {
             val num1 = previousNumber.toDoubleOrNull()
@@ -71,9 +63,20 @@ fun CalculatorScreen() {
             } else {
                 result = "Erro"
             }
-            previousNumber = result
-            currentNumber = ""
+            previousNumber = ""
+            currentNumber = result
             operator = null
+        }
+    }
+
+    val onOperatorClick = { selectedOperator: String ->
+        if (currentNumber.isNotEmpty()) {
+            if (previousNumber.isNotEmpty()) {
+                onEqualClick()
+            }
+            previousNumber = currentNumber
+            currentNumber = ""
+            operator = selectedOperator
         }
     }
 
@@ -83,7 +86,7 @@ fun CalculatorScreen() {
     ) {
         Text(
             text = result,
-            fontSize = 50.sp,
+            fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .padding(16.dp)
