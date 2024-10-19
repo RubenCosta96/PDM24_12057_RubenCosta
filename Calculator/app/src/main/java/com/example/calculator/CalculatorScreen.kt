@@ -25,6 +25,58 @@ fun CalculatorScreen() {
     var operator by remember { mutableStateOf<String?>(null) }
     var previousNumber by remember { mutableStateOf("") }
 
+    val onNumberClick = { number: String ->
+        if (currentNumber == "0" && number != ".") {
+            currentNumber = number
+        } else {
+            currentNumber += number
+        }
+        result = currentNumber
+    }
+
+    val onClearClick = {
+        currentNumber = "0"
+        result = "0"
+        previousNumber = ""
+        operator = null
+    }
+
+    val onOperatorClick = { selectedOperator: String ->
+        if (currentNumber.isNotEmpty()) {
+            previousNumber = currentNumber
+            currentNumber = ""
+            operator = selectedOperator
+        }
+    }
+
+    val onEqualClick = {
+        if (operator != null && previousNumber.isNotEmpty() && currentNumber.isNotEmpty()) {
+            val num1 = previousNumber.toDoubleOrNull()
+            val num2 = currentNumber.toDoubleOrNull()
+
+            if (num1 != null && num2 != null) {
+                if (operator == "+") {
+                    result = (num1 + num2).toString()
+                } else if (operator == "-") {
+                    result = (num1 - num2).toString()
+                } else if (operator == "x") {
+                    result = (num1 * num2).toString()
+                } else if (operator == "÷") {
+                    if (num2 != 0.0) {
+                        result = (num1 / num2).toString()
+                    } else {
+                        result = "Erro"
+                    }
+                }
+            } else {
+                result = "Erro"
+            }
+            previousNumber = result
+            currentNumber = ""
+            operator = null
+        }
+    }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center
@@ -38,6 +90,11 @@ fun CalculatorScreen() {
                 .fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(20.dp))
-        CalculatorKeyboard()
+        CalculatorKeyboard(
+            onNumberClick = onNumberClick,
+            onClearClick = onClearClick,
+            onOperatorClick = onOperatorClick,
+            onEqualClick = onEqualClick
+        )
     }
 }
