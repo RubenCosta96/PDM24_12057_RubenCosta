@@ -1,6 +1,7 @@
 package com.example.calculator
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,7 +15,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -26,10 +30,16 @@ fun CalculatorScreen() {
     var previousNumber by remember { mutableStateOf("") }
 
     val onNumberClick = { number: String ->
-        if (currentNumber == "0" && number != ".") {
-            currentNumber = number
+        if (number == ".") {
+            if (!currentNumber.contains(".")) {
+                currentNumber += number
+            }
         } else {
-            currentNumber += number
+            if (currentNumber == "0") {
+                currentNumber = number
+            } else {
+                currentNumber += number
+            }
         }
         result = currentNumber
     }
@@ -81,16 +91,27 @@ fun CalculatorScreen() {
     }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(150.dp)
+        )
         Text(
             text = result,
+            color = Color.White,
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.End,
             modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
+                .padding(8.dp)
+                .fillMaxWidth(),
+            maxLines = 3,
+            overflow = TextOverflow.Ellipsis
         )
         Spacer(modifier = Modifier.height(20.dp))
         CalculatorKeyboard(

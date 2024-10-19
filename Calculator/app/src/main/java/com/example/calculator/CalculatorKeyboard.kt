@@ -37,10 +37,10 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun CreateButton(text: String, onClick: () -> Unit, color: Color) {
-    Box(modifier = Modifier.padding(4.dp)) {
+    Row(modifier = Modifier.padding(4.dp)) {
         FloatingActionButton(
             onClick = onClick,
-            modifier = Modifier.size(90.dp),
+            modifier = Modifier.size(80.dp),
             shape = CircleShape,
             containerColor = color,
             contentColor = Color.White
@@ -64,8 +64,8 @@ fun CalculatorKeyboard(
             modifier = Modifier.padding(2.dp),
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
-            CreateButton(text = "MRC", color = Color.Black, onClick = {})
-            CreateButton(text = "√", color = Color.Black, onClick = {})
+            CreateButton(text = "MRC", color = Color(0xFF36454F), onClick = {})
+            CreateButton(text = "√", color = Color(0xFF36454F), onClick = {})
             CreateButton(text = "7", color = Color.Gray, onClick = { onNumberClick("7") })
             CreateButton(text = "4", color = Color.Gray, onClick = { onNumberClick("4") })
             CreateButton(text = "1", color = Color.Gray, onClick = { onNumberClick("1") })
@@ -75,8 +75,8 @@ fun CalculatorKeyboard(
             modifier = Modifier.padding(2.dp),
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
-            CreateButton(text = "M-", color = Color.Black, onClick = {})
-            CreateButton(text = "%", color = Color.Black, onClick = {})
+            CreateButton(text = "M-", color = Color(0xFF36454F), onClick = {})
+            CreateButton(text = "%", color = Color(0xFF36454F), onClick = {})
             CreateButton(text = "8", color = Color.Gray, onClick = { onNumberClick("8") })
             CreateButton(text = "5", color = Color.Gray, onClick = { onNumberClick("5") })
             CreateButton(text = "2", color = Color.Gray, onClick = { onNumberClick("2") })
@@ -86,8 +86,8 @@ fun CalculatorKeyboard(
             modifier = Modifier.padding(2.dp),
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
-            CreateButton(text = "M+", color = Color.Black, onClick = {})
-            CreateButton(text = "+/-", color = Color.Black, onClick = {})
+            CreateButton(text = "M+", color = Color(0xFF36454F), onClick = {})
+            CreateButton(text = "+/-", color = Color(0xFF36454F), onClick = {})
             CreateButton(text = "9", color = Color.Gray, onClick = { onNumberClick("9") })
             CreateButton(text = "6", color = Color.Gray, onClick = { onNumberClick("6") })
             CreateButton(text = "3", color = Color.Gray, onClick = { onNumberClick("3") })
@@ -97,12 +97,12 @@ fun CalculatorKeyboard(
             modifier = Modifier.padding(2.dp),
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
-            CreateButton(text = "ON/C", color = Color.Gray, onClick = onClearClick)
-            CreateButton(text = "CE", color = Color.Gray, onClick = {})
-            CreateButton(text = "÷", color = Color.Black, onClick = { onOperatorClick("÷") })
-            CreateButton(text = "x", color = Color.Black, onClick = { onOperatorClick("x") })
-            CreateButton(text = "-", color = Color.Black, onClick = { onOperatorClick("-") })
-            CreateButton(text = "+", color = Color.Black, onClick = { onOperatorClick("+") })
+            CreateButton(text = "ON/C", color = Color(0xFF8BC34A), onClick = onClearClick)
+            CreateButton(text = "CE", color = Color(0xFF8BC34A), onClick = {})
+            CreateButton(text = "÷", color = Color(0xFF36454F), onClick = { onOperatorClick("÷") })
+            CreateButton(text = "x", color = Color(0xFF36454F), onClick = { onOperatorClick("x") })
+            CreateButton(text = "-", color = Color(0xFF36454F), onClick = { onOperatorClick("-") })
+            CreateButton(text = "+", color = Color(0xFF36454F), onClick = { onOperatorClick("+") })
         }
     }
 }
