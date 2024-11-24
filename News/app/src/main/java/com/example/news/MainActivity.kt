@@ -4,22 +4,35 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.news.ui.theme.NewsTheme
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.news.presentation.news_list_screens.NewsListScreen
+import com.example.news.presentation.news_list_viewmodels.NewsListViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            NewsTheme {
-            }
+            MainScreen()
         }
+    }
+}
+
+@Composable
+fun MainScreen(){
+    var selectedNewsId by remember { mutableStateOf<String?>(null) }
+
+    if(selectedNewsId == null){
+        val newsListViewModel: NewsListViewModel = viewModel()
+        NewsListScreen(newsListViewModel) { newsId ->
+            selectedNewsId = newsId
+        }
+    } else {
+        selectedNewsId = null
     }
 }
