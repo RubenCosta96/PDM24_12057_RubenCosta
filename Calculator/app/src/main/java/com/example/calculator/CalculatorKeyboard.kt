@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 //@Composable
 //fun CreateButton(text: String, onClick: () -> Unit, color: Color) {
@@ -43,9 +44,12 @@ fun CreateButton(text: String, onClick: () -> Unit, color: Color) {
             modifier = Modifier.size(80.dp),
             shape = CircleShape,
             containerColor = color,
-            contentColor = Color.White
+            contentColor = Color.White,
         ) {
-            Text(text = text)
+            Text(
+                text = text,
+                fontSize = 20.sp
+            )
         }
     }
 }
