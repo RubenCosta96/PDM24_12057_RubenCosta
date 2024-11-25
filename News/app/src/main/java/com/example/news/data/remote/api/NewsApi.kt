@@ -1,5 +1,6 @@
 package com.example.news.data.remote.api
 
+import com.example.news.data.remote.model.NewsDto
 import com.example.news.data.remote.model.ResultDto
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -18,7 +19,7 @@ object RetrofitInstance {
 
 interface NewsApi{
     @GET("v2/home.json?api-key=2lAGzYgTlUGjG3dJQbscMVQFmOkBAH9b")
-    suspend fun getNews(): List<ResultDto>
+    suspend fun getNews(): NewsDto
 
     @GET("v2/{section}.json?api-key=2lAGzYgTlUGjG3dJQbscMVQFmOkBAH9b")
     suspend fun getNewsDetail(@Path("id") newsId: String): ResultDto
