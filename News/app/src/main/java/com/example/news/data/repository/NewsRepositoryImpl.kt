@@ -1,6 +1,7 @@
 package com.example.news.data.repository
 
 import com.example.news.data.remote.api.NewsApi
+import com.example.news.domain.model.NewsDetail
 import com.example.news.domain.model.Result
 import com.example.news.domain.repository.NewsRepository
 
@@ -9,7 +10,7 @@ class NewsRepositoryImpl(private val api: NewsApi): NewsRepository {
         return api.getNews().results.map { it.toNews() }
     }
 
-    override suspend fun getNewsDetail(newsId: String): Result {
-        return api.getNewsDetail(newsId).toNews()
+    override suspend fun getNewsDetail(newsUri: String): NewsDetail {
+        return api.getNewsDetail(newsUri).toNewsDetail()
     }
 }

@@ -1,5 +1,6 @@
 package com.example.news.data.remote.api
 
+import com.example.news.data.remote.model.NewsDetailDto
 import com.example.news.data.remote.model.NewsDto
 import com.example.news.data.remote.model.ResultDto
 import retrofit2.Retrofit
@@ -22,5 +23,5 @@ interface NewsApi{
     suspend fun getNews(): NewsDto
 
     @GET("v2/{section}.json?api-key=2lAGzYgTlUGjG3dJQbscMVQFmOkBAH9b")
-    suspend fun getNewsDetail(@Path("id") newsId: String): ResultDto
+    suspend fun getNewsDetail(@Path("id") newsUri: String): NewsDetailDto
 }
