@@ -1,5 +1,6 @@
 package com.example.news.presentation.news_list_viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.news.data.remote.api.RetrofitInstance
@@ -15,14 +16,16 @@ class NewsDetailViewModel : ViewModel() {
     private val repository = NewsRepositoryImpl(api)
     private val getNewsDetailUseCase = GetNewsDetailUseCase(repository)
 
-    val newsDetail = MutableStateFlow<List<NewsDetail>>(emptyList())
+    val newsDetail = MutableStateFlow<NewsDetail?>(null)
 
-    fun fetchNewsDetail() {
+    fun fetchNewsDetail(newsUri: String) {
         viewModelScope.launch {
             try {
-                newsDetail.value = getNewsDetailUseCase()
+                Log.d("Dados ViewModel", "Mensagem $newsUri") // Uri está correto
+                newsDetail.value = getNewsDetailUseCase(newsUri)
             } catch (e: Exception) {
-                newsDetail.value = emptyList()
+                Log.e("Dados Erro ViewModel", "Erro ao buscar dados", e)
+                newsDetail.value = null
             }
         }
     }

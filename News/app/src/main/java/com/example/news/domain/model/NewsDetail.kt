@@ -1,6 +1,10 @@
 package com.example.news.domain.model
 
+import com.google.gson.annotations.SerializedName
+
 data class NewsDetail(
-  val title: String,
-  val caption: String
+  @SerializedName("lead_paragraph")
+  val leadParagraph: String,
+  val snippet: String,
+  val uri: String,
 )

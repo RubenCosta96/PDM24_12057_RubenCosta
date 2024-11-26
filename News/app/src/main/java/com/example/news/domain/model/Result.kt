@@ -6,5 +6,5 @@ data class Result(
     val section: String,
     val short_url: String,
     val title: String,
-    val url: String
+    val uri: String
 )

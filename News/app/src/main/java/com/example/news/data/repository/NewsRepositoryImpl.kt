@@ -1,5 +1,6 @@
 package com.example.news.data.repository
 
+import android.util.Log
 import com.example.news.data.remote.api.NewsApi
 import com.example.news.domain.model.NewsDetail
 import com.example.news.domain.model.Result
@@ -10,7 +11,12 @@ class NewsRepositoryImpl(private val api: NewsApi): NewsRepository {
         return api.getNews().results.map { it.toNews() }
     }
 
+    override suspend fun getNewsDetailList(): List<NewsDetail> {
+        return api.getNewsDetailList().docs.map {it.toNewsDetail()}
+    }
+
     override suspend fun getNewsDetail(newsUri: String): NewsDetail {
-        return api.getNewsDetail(newsUri).toNewsDetail()
+        val fq = "uri:\"$newsUri\""
+        return api.getNewsDetail(fq).toNewsDetail()
     }
 }

@@ -46,7 +46,7 @@ fun NewsItem(newsItem: Result, onClick: (String) -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .clickable { onClick(newsItem.url) },
+            .clickable { onClick(newsItem.uri) },
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
