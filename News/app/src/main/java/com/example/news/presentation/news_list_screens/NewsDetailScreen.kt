@@ -1,13 +1,11 @@
 package com.example.news.presentation.news_list_screens
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,25 +29,22 @@ fun NewsDetailScreen(
 
     val newsDetail by viewModel.newsDetail.collectAsState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ){
-        IconButton(onClick = onBack) {
-            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+    if (newsDetail != null) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = newsDetail!!.leadParagraph, style = MaterialTheme.typography.headlineSmall)
+            Text(text = newsDetail!!.snippet, style = MaterialTheme.typography.bodyMedium)
+            Button(onClick = onBack) {
+                Text(text = "Voltar")
+            }
         }
-
-        newsDetail?.let { detail ->
-            Text(
-                text = detail.snippet,
-                style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-            Text(
-                text = detail.leadParagraph,
-                style = MaterialTheme.typography.bodyLarge
-            )
-        } ?: CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+    } else {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
     }
-} 
+}

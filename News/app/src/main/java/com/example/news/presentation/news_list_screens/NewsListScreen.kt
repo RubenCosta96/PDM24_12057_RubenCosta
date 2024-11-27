@@ -2,11 +2,14 @@ package com.example.news.presentation.news_list_screens
 
 import android.util.Log
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,32 +36,25 @@ fun NewsListScreen(
 
     LazyColumn {
         items(newsList) { newsItem ->
-            NewsItem(newsItem = newsItem) {
-                onNewsSelected(it)
+            NewsItem(newsItem) {
+                onNewsSelected(newsItem.uri)
             }
         }
     }
 }
 
 @Composable
-fun NewsItem(newsItem: Result, onClick: (String) -> Unit) {
-    Row(
+fun NewsItem(news: Result, onClick: () -> Unit) {
+    Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .clickable { onClick(newsItem.uri) },
-        verticalAlignment = Alignment.CenterVertically
+            .clickable { onClick() },
+        elevation = CardDefaults.cardElevation(4.dp)
     ) {
-        Text(
-            text = newsItem.title,
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.weight(1f)
-        )
-        Text(
-            text = newsItem.section,
-            style = MaterialTheme.typography.bodyMedium,
-            textAlign = TextAlign.End,
-            modifier = Modifier.padding(end = 8.dp)
-        )
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = news.title, style = MaterialTheme.typography.headlineLarge)
+            Text(text = news.section, style = MaterialTheme.typography.bodyMedium)
+        }
     }
 }

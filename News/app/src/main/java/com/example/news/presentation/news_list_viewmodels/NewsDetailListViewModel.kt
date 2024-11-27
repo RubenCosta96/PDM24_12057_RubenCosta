@@ -1,5 +1,6 @@
 package com.example.news.presentation.news_list_viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.news.data.remote.api.RetrofitInstance

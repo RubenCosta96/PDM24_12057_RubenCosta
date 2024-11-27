@@ -23,7 +23,8 @@ interface NewsApi{
     @GET("topstories/v2/home.json?api-key=2lAGzYgTlUGjG3dJQbscMVQFmOkBAH9b")
     suspend fun getNews(): NewsDto
 
-    @GET("topstories/v2/home.json?api-key=2lAGzYgTlUGjG3dJQbscMVQFmOkBAH9b") // Completar
+    //@GET("topstories/v2/home.json?api-key=2lAGzYgTlUGjG3dJQbscMVQFmOkBAH9b") // Completar
+    @GET("search/v2/articlesearch.json?&api-key=2lAGzYgTlUGjG3dJQbscMVQFmOkBAH9b")
     suspend fun getNewsDetailList(): NewsDetailListDto
 
     @GET("search/v2/articlesearch.json?&api-key=2lAGzYgTlUGjG3dJQbscMVQFmOkBAH9b")

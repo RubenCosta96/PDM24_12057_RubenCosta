@@ -13,6 +13,8 @@ data class NewsDetailDto(
     fun toNewsDetail(): NewsDetail{
         if (leadParagraph.isNullOrEmpty()) {
             Log.e("Dados Dto", "leadParagraph está vazio ou nulo")
+        }else {
+            Log.d("Dados Dto", "leadParagraph: $leadParagraph")
         }
 
         return NewsDetail(leadParagraph = leadParagraph, snippet = snippet, uri = uri)

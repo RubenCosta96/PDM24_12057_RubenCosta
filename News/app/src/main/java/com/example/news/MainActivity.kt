@@ -30,15 +30,14 @@ class MainActivity : ComponentActivity() {
 fun MainScreen(){
     var selectedNewsUri by remember { mutableStateOf<String?>(null) }
 
-    if(selectedNewsUri == null){
+    if (selectedNewsUri == null) {
         val newsListViewModel: NewsListViewModel = viewModel()
         NewsListScreen(newsListViewModel) { newsUri ->
             selectedNewsUri = newsUri
         }
     } else {
         val newsDetailViewModel: NewsDetailViewModel = viewModel()
-        NewsDetailScreen(newsDetailViewModel, selectedNewsUri!!){
-            Log.e("Erro","Erro aqui")
+        NewsDetailScreen(newsDetailViewModel, selectedNewsUri!!) {
             selectedNewsUri = null
         }
     }

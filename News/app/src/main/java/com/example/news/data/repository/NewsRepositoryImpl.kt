@@ -12,7 +12,11 @@ class NewsRepositoryImpl(private val api: NewsApi): NewsRepository {
     }
 
     override suspend fun getNewsDetailList(): List<NewsDetail> {
-        return api.getNewsDetailList().docs.map {it.toNewsDetail()}
+        Log.d("Resposta", "Chamando getNewsDetailList")
+        val response = api.getNewsDetailList()
+        Log.d("Resposta", "Resposta da API: ${response.docs}")
+        return response.docs.map { it.toNewsDetail() }
+//        return api.getNewsDetailList().docs.map {it.toNewsDetail()}
     }
 
     override suspend fun getNewsDetail(newsUri: String): NewsDetail {
