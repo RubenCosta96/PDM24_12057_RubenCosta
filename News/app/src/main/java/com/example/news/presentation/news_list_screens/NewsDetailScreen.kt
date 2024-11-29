@@ -2,7 +2,9 @@ package com.example.news.presentation.news_list_screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -31,8 +33,9 @@ fun NewsDetailScreen(
 
     if (newsDetail != null) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = newsDetail!!.leadParagraph, style = MaterialTheme.typography.headlineSmall)
-            Text(text = newsDetail!!.snippet, style = MaterialTheme.typography.bodyMedium)
+            Text(text = newsDetail!!.snippet, style = MaterialTheme.typography.headlineSmall)
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(text = newsDetail!!.leadParagraph, style = MaterialTheme.typography.bodyLarge)
             Button(onClick = onBack) {
                 Text(text = "Voltar")
             }

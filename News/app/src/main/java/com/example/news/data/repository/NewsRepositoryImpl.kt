@@ -11,7 +11,6 @@ class NewsRepositoryImpl(private val api: NewsApi): NewsRepository {
         return api.getNews().results.map { it.toNews() }
     }
 
-
     override suspend fun getNewsDetail(newsUri: String): NewsDetail {
         val fq = "uri:\"$newsUri\""
         return api.getNewsDetail(fq).response.docs[0].toNewsDetail()

@@ -10,19 +10,25 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.news.presentation.news_list_viewmodels.NewsListViewModel
 import com.example.news.domain.model.Result
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsListScreen(
     viewModel: NewsListViewModel,
@@ -34,15 +40,32 @@ fun NewsListScreen(
         viewModel.fetchNews()
     }
 
-    LazyColumn {
-        items(newsList) { newsItem ->
-            NewsItem(newsItem) {
-                onNewsSelected(newsItem.uri)
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Lista de Notícias",
+                        color = Color.White
+                    )
+                },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary // Cor de fundo
+                )
+            )
+        }
+    ) { paddingValues ->
+        LazyColumn(
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            items(newsList) { newsItem ->
+                NewsItem(newsItem) {
+                    onNewsSelected(newsItem.uri)
+                }
             }
         }
     }
 }
-
 @Composable
 fun NewsItem(news: Result, onClick: () -> Unit) {
     Card(
@@ -53,8 +76,8 @@ fun NewsItem(news: Result, onClick: () -> Unit) {
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = news.title, style = MaterialTheme.typography.headlineLarge)
-            Text(text = news.section, style = MaterialTheme.typography.bodyMedium)
+            Text(text = news.title, style = MaterialTheme.typography.headlineSmall)
+            Text(text = "Section: ${news.section}", style = MaterialTheme.typography.bodyMedium)
         }
     }
 }
