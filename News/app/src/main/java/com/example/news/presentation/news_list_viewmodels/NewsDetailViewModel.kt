@@ -21,10 +21,8 @@ class NewsDetailViewModel : ViewModel() {
     fun fetchNewsDetail(newsUri: String) {
         viewModelScope.launch {
             try {
-                Log.d("Dados ViewModel", "Mensagem $newsUri") // Uri está correto
                 newsDetail.value = getNewsDetailUseCase(newsUri)
             } catch (e: Exception) {
-                Log.e("Dados Erro ViewModel", "Erro ao buscar dados", e)
                 newsDetail.value = null
             }
         }
