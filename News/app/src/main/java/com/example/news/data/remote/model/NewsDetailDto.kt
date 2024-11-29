@@ -7,16 +7,12 @@ import com.google.gson.annotations.SerializedName
 data class NewsDetailDto(
     @SerializedName("lead_paragraph")
     val leadParagraph: String,
+    @SerializedName("snippet")
     val snippet: String,
+    @SerializedName("uri")
     val uri: String,
-) {
-    fun toNewsDetail(): NewsDetail{
-        if (leadParagraph.isNullOrEmpty()) {
-            Log.e("Dados Dto", "leadParagraph está vazio ou nulo")
-        }else {
-            Log.d("Dados Dto", "leadParagraph: $leadParagraph")
-        }
-
+){
+    fun toNewsDetail(): NewsDetail {
         return NewsDetail(leadParagraph = leadParagraph, snippet = snippet, uri = uri)
     }
 }
