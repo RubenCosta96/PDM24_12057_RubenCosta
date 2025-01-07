@@ -1,7 +1,9 @@
 package com.example.navtest.presentation.viewmodel
 
 import android.util.Log
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.navtest.domain.model.CartData
 import com.example.navtest.domain.model.CartItemData
@@ -17,6 +19,12 @@ class CartViewModel : ViewModel() {
 
     private val _sharedCarts = mutableStateListOf<CartData>()
     val sharedCarts: List<CartData> get() = _sharedCarts
+
+    private val _showDialog = mutableStateOf(false)
+    val showDialog: State<Boolean> get() = _showDialog
+    private val _selectedPaymentMethod = mutableStateOf("")
+    val selectedPaymentMethod: State<String> get() = _selectedPaymentMethod
+
 
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
@@ -192,6 +200,18 @@ class CartViewModel : ViewModel() {
 
     fun calculateTotal(): Double {
         return _cartItems.sumOf { it.product.price * it.quantity }
+    }
+
+    fun openPaymentDialog() {
+        _showDialog.value = true
+    }
+
+    fun closePaymentDialog() {
+        _showDialog.value = false
+    }
+
+    fun selectPaymentMethod(method: String) {
+        _selectedPaymentMethod.value = method
     }
 
 }

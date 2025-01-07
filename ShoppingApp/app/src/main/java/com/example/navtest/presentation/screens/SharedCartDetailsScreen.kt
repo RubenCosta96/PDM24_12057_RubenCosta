@@ -1,4 +1,5 @@
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -10,9 +11,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -88,7 +92,7 @@ fun SharedCartDetailsScreen(cartId: String, navController: NavController, cartVi
                     Text("Carrinho não encontrado.")
                 } else {
                     LazyColumn(
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxWidth()
                     ) {
                         items(cart.value?.products ?: emptyList()) { cartItem ->
                             val product = productsDetails.value[cartItem.productId]
@@ -97,10 +101,56 @@ fun SharedCartDetailsScreen(cartId: String, navController: NavController, cartVi
                             }
                         }
                     }
+                    Button(
+                        onClick = { cartViewModel.openPaymentDialog() },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+                        Text("Comprar")
+                    }
                 }
             }
         }
     )
+    if (cartViewModel.showDialog.value) {
+        AlertDialog(
+            onDismissRequest = { cartViewModel.closePaymentDialog() },
+            title = { Text("Escolher Método de Pagamento") },
+            text = {
+                Column {
+                    listOf("Paypal", "MBWay", "Cartão").forEach { method ->
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { cartViewModel.selectPaymentMethod(method) }
+                        ) {
+                            RadioButton(
+                                selected = cartViewModel.selectedPaymentMethod.value == method,
+                                onClick = { cartViewModel.selectPaymentMethod(method) }
+                            )
+                            Text(text = method, modifier = Modifier.padding(start = 8.dp))
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        cartViewModel.closePaymentDialog()
+                    }
+                ) {
+                    Text("Confirmar")
+                }
+            },
+            dismissButton = {
+                Button(onClick = { cartViewModel.closePaymentDialog() }) {
+                    Text("Cancelar")
+                }
+            }
+        )
+    }
 }
 
 
