@@ -1,6 +1,5 @@
 package com.example.navtest.presentation.screens
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
@@ -8,49 +7,21 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.google.firebase.auth.FirebaseAuth
+import com.example.navtest.presentation.viewmodel.RegisterViewModel
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 
 @Composable
-fun RegisterScreen(navController: NavController) {
-    val auth = FirebaseAuth.getInstance()
-
+fun RegisterScreen(navController: NavController, registerViewModel: RegisterViewModel = viewModel()) {
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
     val confirmPassword = remember { mutableStateOf("") }
-
-    fun registerUserWithFirebase(email: String, password: String) {
-        if (password == confirmPassword.value) {
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Toast.makeText(
-                            navController.context,
-                            "Registo realizado com sucesso.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        navController.navigate("login")
-                    } else {
-                        Toast.makeText(
-                            navController.context,
-                            "Erro no registo: ${task.exception?.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-        } else {
-            Toast.makeText(
-                navController.context,
-                "As senhas não coincidem.",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
 
     Column(modifier = Modifier.padding(16.dp)) {
         Text(text = "Registo")
@@ -73,7 +44,7 @@ fun RegisterScreen(navController: NavController) {
             keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Next
             ),
-            visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation()
+            visualTransformation = PasswordVisualTransformation()
         )
 
         TextField(
@@ -84,11 +55,18 @@ fun RegisterScreen(navController: NavController) {
             keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Done
             ),
-            visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation()
+            visualTransformation = PasswordVisualTransformation()
         )
 
         Button(onClick = {
-            registerUserWithFirebase(email.value,password.value)
+            registerViewModel.registerUserWithFirebase(
+                context = navController.context,
+                email = email.value,
+                password = password.value,
+                confirmPassword = confirmPassword.value
+            ) {
+                navController.navigate("login")
+            }
         }) {
             Text("Criar Conta")
         }
